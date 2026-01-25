@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin: 0.67em 0;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.75em 0;
+}
+
+h3 {
+  font-size: 1.17em;
+  font-weight: bold;
+  margin: 0.83em 0;
+}
+
+h4 {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 1.12em 0;
+}
+
+h5 {
+  font-size: 0.83em;
+  font-weight: bold;
+  margin: 1.5em 0;
+}
+
+h6 {
+  font-size: 0.75em;
+  font-weight: bold;
+  margin: 1.67em 0;
+}
+
+p {
+  margin: 1em 0;
+  display: block;
+}
+
+ul, ol {
+  margin: 1em 0;
+  padding-left: 40px;
+  display: block;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  display: list-item;
+  margin: 0.5em 0;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  display: table;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tbody {
+  display: table-row-group;
+}
+
+tfoot {
+  display: table-footer-group;
+}
+
+tr {
+  display: table-row;
+}
+
+th, td {
+  display: table-cell;
+  padding: 1px;
+}
+
+th {
+  font-weight: bold;
+  text-align: center;
+}
+
+a {
+  color: #0000ee;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="range"] {
+  padding: 1px;
+  border: 1px inset;
+}
+
+textarea {
+  padding: 2px;
+  border: 1px inset;
+}
+
+select {
+  padding: 1px;
+  border: 1px inset;
+}
