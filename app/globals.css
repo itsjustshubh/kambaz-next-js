@@ -86,9 +86,18 @@ li {
 }
 
 table {
-  border-collapse: separate;
-  border-spacing: 2px;
+  border-collapse: collapse;
   display: table;
+}
+
+table[border] {
+  border: 1px solid black;
+}
+
+table[border] th,
+table[border] td {
+  border: 1px solid black;
+  padding: 8px 16px;
 }
 
 thead {
@@ -109,7 +118,7 @@ tr {
 
 th, td {
   display: table-cell;
-  padding: 1px;
+  padding: 4px 8px;
 }
 
 th {
