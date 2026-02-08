@@ -7,7 +7,9 @@ export default function CourseNavigation({ cid }: { cid: string }) {
   const pathname = usePathname();
   const base = `/courses/${cid}`;
   const isActive = (path: string, exact = false) =>
-    exact ? pathname === path : pathname === path || pathname.startsWith(path + "/");
+    exact
+      ? pathname === path
+      : pathname === path || pathname.startsWith(path + "/");
   const linkClass = (path: string, exact = false) =>
     `list-group-item border-0 ${isActive(path, exact) ? "border-start border-3 border-dark text-dark bg-light" : "text-danger"}`;
 

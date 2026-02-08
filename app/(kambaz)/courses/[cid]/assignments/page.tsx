@@ -1,8 +1,8 @@
 import Link from "next/link";
 import {
   Button,
+  Form,
   InputGroup,
-  FormControl,
   ListGroup,
   ListGroupItem,
 } from "react-bootstrap";
@@ -22,7 +22,7 @@ export default async function Assignments({
           <InputGroup.Text>
             <FaSearch />
           </InputGroup.Text>
-          <FormControl
+          <Form.Control
             placeholder="Search for Assignments"
             id="wd-search-assignment"
           />

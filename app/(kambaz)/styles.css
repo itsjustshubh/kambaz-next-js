@@ -7,10 +7,8 @@ body * {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-@media (min-width: 768px) {
-  #wd-kambaz .wd-main-content-offset {
-    padding-left: 140px !important;
-  }
+#wd-kambaz-navigation .list-group-item {
+  text-decoration: none;
 }
 
 .list-group.wd > .list-group-item.active {
