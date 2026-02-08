@@ -1,6 +1,6 @@
 # Kambaz
 
-CS4550 Web Development - Assignment 1
+CS4550 Web Development
 
 A Learning Management System prototype built with Next.js.
 

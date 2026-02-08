@@ -25,6 +25,15 @@ export default function TOC() {
       <Link href="/" id="wd-kambaz-link" className="nav-link">
         Kambaz
       </Link>
+      <a
+        href="https://github.com/itsjustshubh/kambaz-next-js"
+        id="wd-github-link"
+        className="nav-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        GitHub Repository
+      </a>
     </nav>
   );
 }
