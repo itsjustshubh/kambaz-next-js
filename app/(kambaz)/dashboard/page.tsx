@@ -1,5 +1,58 @@
 import Link from "next/link";
-import Image from "next/image";
+import {
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button,
+} from "react-bootstrap";
+
+const courses = [
+  {
+    id: "1234",
+    title: "CS1234 React JS",
+    desc: "Full Stack software developer",
+    img: "/images/reactjs.jpg",
+  },
+  {
+    id: "5678",
+    title: "CS5678 Node.js",
+    desc: "Server-side JavaScript development",
+    img: "/images/reactjs.jpg",
+  },
+  {
+    id: "9012",
+    title: "CS9012 MongoDB",
+    desc: "Database management and design",
+    img: "/images/reactjs.jpg",
+  },
+  {
+    id: "3456",
+    title: "CS3456 TypeScript",
+    desc: "Typed JavaScript development",
+    img: "/images/reactjs.jpg",
+  },
+  {
+    id: "7890",
+    title: "CS7890 Express.js",
+    desc: "Web application framework",
+    img: "/images/reactjs.jpg",
+  },
+  {
+    id: "2468",
+    title: "CS2468 Next.js",
+    desc: "React framework for production",
+    img: "/images/reactjs.jpg",
+  },
+  {
+    id: "1357",
+    title: "CS1357 GraphQL",
+    desc: "Query language for APIs",
+    img: "/images/teslabot.jpg",
+  },
+];
 
 export default function Dashboard() {
   return (
@@ -9,125 +62,49 @@ export default function Dashboard() {
       <h2 id="wd-dashboard-published">Published Courses (12)</h2>
       <hr />
       <div id="wd-dashboard-courses">
-        <div className="wd-dashboard-course">
-          <Link href="/courses/1234" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="reactjs"
-            />
-            <div>
-              <h5>CS1234 React JS</h5>
-              <p className="wd-dashboard-course-title">
-                Full Stack software developer
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/courses/5678" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="nodejs"
-            />
-            <div>
-              <h5>CS5678 Node.js</h5>
-              <p className="wd-dashboard-course-title">
-                Server-side JavaScript development
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/courses/9012" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="mongodb"
-            />
-            <div>
-              <h5>CS9012 MongoDB</h5>
-              <p className="wd-dashboard-course-title">
-                Database management and design
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/courses/3456" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="typescript"
-            />
-            <div>
-              <h5>CS3456 TypeScript</h5>
-              <p className="wd-dashboard-course-title">
-                Typed JavaScript development
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/courses/7890" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="express"
-            />
-            <div>
-              <h5>CS7890 Express.js</h5>
-              <p className="wd-dashboard-course-title">
-                Web application framework
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/courses/2468" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="nextjs"
-            />
-            <div>
-              <h5>CS2468 Next.js</h5>
-              <p className="wd-dashboard-course-title">
-                React framework for production
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
-        <div className="wd-dashboard-course">
-          <Link href="/courses/1357" className="wd-dashboard-course-link">
-            <Image
-              src="/images/reactjs.jpg"
-              width={200}
-              height={150}
-              alt="graphql"
-            />
-            <div>
-              <h5>CS1357 GraphQL</h5>
-              <p className="wd-dashboard-course-title">
-                Query language for APIs
-              </p>
-              <button>Go</button>
-            </div>
-          </Link>
-        </div>
+        <Row xs={1} md={4} className="g-4">
+          {courses.map((c) => (
+            <Col
+              key={c.id}
+              className="wd-dashboard-course"
+              style={{ width: "300px" }}
+            >
+              <Card>
+                <Link
+                  href={`/courses/${c.id}/home`}
+                  className="wd-dashboard-course-link text-decoration-none text-dark"
+                >
+                  <div
+                    className="card-img-top"
+                    style={{ height: 160, overflow: "hidden" }}
+                  >
+                    <img
+                      src={c.img}
+                      alt={c.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                  <CardBody>
+                    <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
+                      {c.title}
+                    </CardTitle>
+                    <CardText
+                      className="wd-dashboard-course-description overflow-hidden"
+                      style={{ height: "100px" }}
+                    >
+                      {c.desc}
+                    </CardText>
+                    <Button variant="primary">Go</Button>
+                  </CardBody>
+                </Link>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </div>
     </div>
   );

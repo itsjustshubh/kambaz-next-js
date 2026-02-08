@@ -15,6 +15,13 @@ export default function Labs() {
           <Link href="/labs/lab2" id="wd-lab2-link">
             Lab 2: CSS Basics
           </Link>
+          <ul>
+            <li>
+              <Link href="/labs/lab2/tailwind" id="wd-lab2-tailwind-link">
+                Lab 2: Tailwind CSS
+              </Link>
+            </li>
+          </ul>
         </li>
         <li>
           <Link href="/labs/lab3" id="wd-lab3-link">
