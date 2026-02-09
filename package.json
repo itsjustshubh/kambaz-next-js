@@ -6,7 +6,8 @@
     "dev": "clear && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "ping": "node scripts/ping-pages.mjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

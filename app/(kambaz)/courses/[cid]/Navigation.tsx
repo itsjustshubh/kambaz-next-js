@@ -10,15 +10,17 @@ export default function CourseNavigation({ cid }: { cid: string }) {
     exact
       ? pathname === path
       : pathname === path || pathname.startsWith(path + "/");
+  const isHomeActive = pathname === base || pathname === `${base}/home`;
   const linkClass = (path: string, exact = false) =>
     `list-group-item border-0 ${isActive(path, exact) ? "border-start border-3 border-dark text-dark bg-light" : "text-danger"}`;
+  const homeLinkClass = `list-group-item border-0 ${isHomeActive ? "border-start border-3 border-dark text-dark bg-light" : "text-danger"}`;
 
   return (
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       <Link
         href={`${base}/home`}
         id="wd-course-home-link"
-        className={linkClass(`${base}/home`, true)}
+        className={homeLinkClass}
       >
         Home
       </Link>

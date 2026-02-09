@@ -1,17 +1,20 @@
+import { Row, Col } from "react-bootstrap";
 import Modules from "../modules/page";
 import CourseStatus from "./Status";
 
 export default function Home() {
   return (
     <div id="wd-home">
-      <div className="d-flex" id="wd-home-flex">
-        <div className="flex-fill me-3">
+      <Row id="wd-home-cols">
+        <Col lg={3} className="d-none d-lg-block" />
+        <Col lg={3} className="d-none d-lg-block" />
+        <Col xs={12} lg={3} className="pe-lg-3">
           <Modules />
-        </div>
-        <div className="d-none d-lg-block">
+        </Col>
+        <Col xs={12} lg={3} className="d-none d-lg-block">
           <CourseStatus />
-        </div>
-      </div>
+        </Col>
+      </Row>
     </div>
   );
 }

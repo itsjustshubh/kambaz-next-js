@@ -1,7 +1,8 @@
 "use client";
 
 import { ReactNode } from "react";
-import { AiOutlineDashboard } from "react-icons/ai";
+import { usePathname } from "next/navigation";
+import { FaChartLine } from "react-icons/fa";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
@@ -40,6 +41,14 @@ function NavItem({
 }
 
 export default function KambazNavigation() {
+  const pathname = usePathname();
+  const isAccount = pathname === "/account" || pathname.startsWith("/account/");
+  const isDashboard = pathname === "/dashboard";
+  const isCourses = pathname === "/courses" || pathname.startsWith("/courses/");
+  const isCalendar = pathname.startsWith("/calendar");
+  const isInbox = pathname.startsWith("/inbox");
+  const isLabs = pathname.startsWith("/labs");
+
   return (
     <div
       id="wd-kambaz-navigation"
@@ -63,38 +72,43 @@ export default function KambazNavigation() {
         id="wd-account-link"
         icon={<FaRegCircleUser />}
         label="Account"
+        active={isAccount}
         iconRed={false}
       />
       <NavItem
         href="/dashboard"
         id="wd-dashboard-link"
-        icon={<AiOutlineDashboard />}
+        icon={<FaChartLine />}
         label="Dashboard"
-        active
+        active={isDashboard}
       />
       <NavItem
         href="/courses"
         id="wd-course-link"
         icon={<LiaBookSolid />}
         label="Courses"
+        active={isCourses}
       />
       <NavItem
         href="/calendar"
         id="wd-calendar-link"
         icon={<IoCalendarOutline />}
         label="Calendar"
+        active={isCalendar}
       />
       <NavItem
         href="/inbox"
         id="wd-inbox-link"
         icon={<FaInbox />}
         label="Inbox"
+        active={isInbox}
       />
       <NavItem
         href="/labs"
         id="wd-labs-link"
         icon={<LiaCogSolid />}
         label="Labs"
+        active={isLabs}
       />
     </div>
   );
