@@ -1,3 +1,6 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
   Form,
@@ -10,39 +13,18 @@ import {
   Row,
   Col,
 } from "react-bootstrap";
+import * as db from "../../../../database";
 
-const ASSIGNMENT_NAMES: Record<string, string> = {
-  "123": "A1 - ENV + HTML",
-  "124": "A2 - CSS + BOOTSTRAP",
-  "125": "A3 - JAVASCRIPT + REACT",
-  q1: "Q1 - HTML Basics",
-  midterm: "Midterm",
-  project: "Final Project",
-};
+export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
 
-export default async function AssignmentEditor({
-  params,
-}: {
-  params: Promise<{ cid: string; aid: string }>;
-}) {
-  const { cid, aid } = await params;
-  const assignmentName = ASSIGNMENT_NAMES[aid] ?? "Assignment";
+  if (!assignment) {
+    return <div>Assignment not found</div>;
+  }
 
   return (
     <div id="wd-assignments-editor" className="p-3">
-      <nav aria-label="breadcrumb" className="mb-3">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item">
-            <Link href={`/courses/${cid}`}>Course {cid}</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link href={`/courses/${cid}/assignments`}>Assignments</Link>
-          </li>
-          <li className="breadcrumb-item active" aria-current="page">
-            {assignmentName}
-          </li>
-        </ol>
-      </nav>
       <Form>
         <Row className="mb-3">
           <Col>
@@ -51,7 +33,7 @@ export default async function AssignmentEditor({
               <FormControl
                 id="wd-name"
                 className="form-control"
-                defaultValue="A1 - ENV + HTML"
+                defaultValue={assignment.title}
                 placeholder="Assignment Name"
               />
             </FormGroup>
@@ -67,7 +49,7 @@ export default async function AssignmentEditor({
                 id="wd-description"
                 className="form-control"
                 rows={10}
-                defaultValue="The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section links to each of the lab assignments link to the Kanbas application a link to your GitHub repository"
+                defaultValue={assignment.description}
               />
             </FormGroup>
           </Col>
@@ -81,7 +63,7 @@ export default async function AssignmentEditor({
                 type="number"
                 id="wd-points"
                 className="form-control"
-                defaultValue={100}
+                defaultValue={assignment.points}
               />
             </FormGroup>
           </Col>
@@ -158,6 +140,7 @@ export default async function AssignmentEditor({
                   type="checkbox"
                   id="wd-online-website-url"
                   label="Website URL"
+                  defaultChecked
                 />
                 <FormCheck
                   type="checkbox"
@@ -201,7 +184,7 @@ export default async function AssignmentEditor({
                 type="date"
                 id="wd-due-date"
                 className="form-control"
-                defaultValue="2024-05-13"
+                defaultValue={assignment.dueDate}
               />
             </FormGroup>
           </Col>
@@ -215,7 +198,7 @@ export default async function AssignmentEditor({
                 type="date"
                 id="wd-available-from"
                 className="form-control"
-                defaultValue="2024-01-01"
+                defaultValue={assignment.availableFrom}
               />
             </FormGroup>
           </Col>
@@ -229,36 +212,22 @@ export default async function AssignmentEditor({
                 type="date"
                 id="wd-available-until"
                 className="form-control"
-                defaultValue="2024-12-31"
+                defaultValue={assignment.availableUntil}
               />
             </FormGroup>
           </Col>
         </Row>
 
-        <Row className="mb-3">
-          <Col>
-            <FormCheck
-              type="checkbox"
-              id="wd-available"
-              label="Available"
-              defaultChecked
-              className="mb-2"
-            />
-            <FormCheck
-              type="checkbox"
-              id="wd-published"
-              label="Published"
-              defaultChecked
-              className="mb-4"
-            />
-          </Col>
-        </Row>
-
         <Row>
           <Col>
-            <div className="d-flex gap-2">
-              <Button variant="secondary">Cancel</Button>
-              <Button variant="danger">Save</Button>
+            <hr />
+            <div className="d-flex gap-2 float-end">
+              <Link href={`/courses/${cid}/assignments`}>
+                <Button variant="secondary">Cancel</Button>
+              </Link>
+              <Link href={`/courses/${cid}/assignments`}>
+                <Button variant="danger">Save</Button>
+              </Link>
             </div>
           </Col>
         </Row>

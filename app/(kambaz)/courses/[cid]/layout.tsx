@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
 import CourseHeader from "./CourseHeader";
+import { courses } from "../../database";
 
 export default async function CoursesLayout({
   children,
@@ -10,9 +11,11 @@ export default async function CoursesLayout({
   params: Promise<{ cid: string }>;
 }>) {
   const { cid } = await params;
+  const course = courses.find((course) => course._id === cid);
+
   return (
     <div id="wd-courses">
-      <CourseHeader cid={cid} />
+      <CourseHeader course={course} />
       <hr />
       <div className="d-flex">
         <div className="d-none d-md-block">

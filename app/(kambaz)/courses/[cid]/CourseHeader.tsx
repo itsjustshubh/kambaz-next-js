@@ -3,35 +3,28 @@
 import { usePathname } from "next/navigation";
 import { FaAlignJustify } from "react-icons/fa";
 
-const SEGMENT_NAMES: Record<string, string> = {
-  home: "Home",
-  modules: "Modules",
-  piazza: "Piazza",
-  zoom: "Zoom",
-  assignments: "Assignments",
-  quizzes: "Quizzes",
-  grades: "Grades",
-  people: "People",
-  table: "Table",
-};
-
-function formatSegment(segment: string): string {
-  return SEGMENT_NAMES[segment.toLowerCase()] ?? segment;
+interface Course {
+  _id: string;
+  name: string;
+  number: string;
+  description: string;
 }
 
-export default function CourseHeader({ cid }: { cid: string }) {
+export default function CourseHeader({ course }: { course?: Course }) {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const courseIndex = segments.indexOf("courses");
   const afterCourse = courseIndex >= 0 ? segments.slice(courseIndex + 2) : [];
-  const pageParts = afterCourse.map(formatSegment);
-  const breadcrumb = pageParts.length > 0 ? ` > ${pageParts.join(" > ")}` : "";
+  const pageName =
+    afterCourse.length > 0 ? afterCourse[afterCourse.length - 1] : "";
+  const formattedPage = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+  const breadcrumb = formattedPage ? ` > ${formattedPage}` : "";
 
   return (
-    <h2 className="text-danger flex items-center gap-2 flex-wrap">
-      <FaAlignJustify className="shrink-0 size-6 mr-4" />
-      <span className="text-xl font-bold">Course {cid}</span>
-      <span className="text-xl font-medium text-gray-800">{breadcrumb}</span>
+    <h2 className="text-danger">
+      <FaAlignJustify className="me-4 fs-4 mb-1" />
+      {course?.name || "Course"}
+      {breadcrumb}
     </h2>
   );
 }

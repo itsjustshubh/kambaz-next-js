@@ -1,115 +1,73 @@
 "use client";
 
-import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { FaChartLine } from "react-icons/fa";
+import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import Link from "next/link";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 
-function NavItem({
-  href,
-  id,
-  icon,
-  label,
-  active = false,
-  iconRed = true,
-}: {
-  href: string;
-  id: string;
-  icon: ReactNode;
-  label: string;
-  active?: boolean;
-  iconRed?: boolean;
-}) {
-  const bgClass = active ? "bg-white text-danger" : "bg-black text-white";
-  const iconClass = active || iconRed ? "text-danger fs-5" : "text-white fs-5";
-
-  return (
-    <Link
-      href={href}
-      id={id}
-      className={`list-group-item border-0 py-1.5 w-100 d-flex flex-column align-items-center justify-content-center ${bgClass}`}
-    >
-      <span className={`${iconClass} mb-0 text-3xl [&_svg]:w-8 [&_svg]:h-8`}>
-        {icon}
-      </span>
-      <span className="text-sm font-medium">{label}</span>
-    </Link>
-  );
-}
+const links = [
+  { label: "Dashboard", path: "/dashboard", icon: AiOutlineDashboard },
+  { label: "Courses", path: "/dashboard", icon: LiaBookSolid },
+  { label: "Calendar", path: "/calendar", icon: IoCalendarOutline },
+  { label: "Inbox", path: "/inbox", icon: FaInbox },
+  { label: "Labs", path: "/labs", icon: LiaCogSolid },
+];
 
 export default function KambazNavigation() {
   const pathname = usePathname();
-  const isAccount = pathname === "/account" || pathname.startsWith("/account/");
-  const isDashboard = pathname === "/dashboard";
-  const isCourses = pathname === "/courses" || pathname.startsWith("/courses/");
-  const isCalendar = pathname.startsWith("/calendar");
-  const isInbox = pathname.startsWith("/inbox");
-  const isLabs = pathname.startsWith("/labs");
 
   return (
-    <div
+    <ListGroup
       id="wd-kambaz-navigation"
-      className="list-group rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2 d-flex flex-column align-items-center"
-      style={{ width: 84 }}
+      style={{ width: 120 }}
+      className="rounded-0 position-fixed bottom-0 top-0 d-none d-md-block bg-black z-2"
     >
-      <a
+      <ListGroupItem
         id="wd-neu-link"
+        as="a"
         target="_blank"
         href="https://www.northeastern.edu/"
-        className="list-group-item border-0 text-center bg-black p-0 w-100"
+        action
+        className="bg-black border-0 text-center"
       >
-        <img
-          src="/images/NEU.png"
-          style={{ width: "100%" }}
-          alt="Northeastern University"
-        />
-      </a>
-      <NavItem
+        <img src="/images/NEU.png" width="75px" alt="NEU" />
+      </ListGroupItem>
+      <ListGroupItem
+        as={Link}
         href="/account"
         id="wd-account-link"
-        icon={<FaRegCircleUser />}
-        label="Account"
-        active={isAccount}
-        iconRed={false}
-      />
-      <NavItem
-        href="/dashboard"
-        id="wd-dashboard-link"
-        icon={<FaChartLine />}
-        label="Dashboard"
-        active={isDashboard}
-      />
-      <NavItem
-        href="/courses"
-        id="wd-course-link"
-        icon={<LiaBookSolid />}
-        label="Courses"
-        active={isCourses}
-      />
-      <NavItem
-        href="/calendar"
-        id="wd-calendar-link"
-        icon={<IoCalendarOutline />}
-        label="Calendar"
-        active={isCalendar}
-      />
-      <NavItem
-        href="/inbox"
-        id="wd-inbox-link"
-        icon={<FaInbox />}
-        label="Inbox"
-        active={isInbox}
-      />
-      <NavItem
-        href="/labs"
-        id="wd-labs-link"
-        icon={<LiaCogSolid />}
-        label="Labs"
-        active={isLabs}
-      />
-    </div>
+        className={`text-center border-0 ${
+          pathname.includes("account")
+            ? "bg-white text-danger"
+            : "bg-black text-white"
+        }`}
+      >
+        <FaRegCircleUser
+          className={`fs-1 ${pathname.includes("account") ? "text-danger" : "text-white"}`}
+        />
+        <br />
+        Account
+      </ListGroupItem>
+      {links.map((link) => (
+        <ListGroupItem
+          key={link.label}
+          as={Link}
+          href={link.path}
+          id={`wd-${link.label.toLowerCase()}-link`}
+          className={`bg-black text-center border-0 ${
+            pathname.includes(link.label.toLowerCase())
+              ? "text-danger bg-white"
+              : "text-white bg-black"
+          }`}
+        >
+          {<link.icon className="fs-1 text-danger" />}
+          <br />
+          {link.label}
+        </ListGroupItem>
+      ))}
+    </ListGroup>
   );
 }
