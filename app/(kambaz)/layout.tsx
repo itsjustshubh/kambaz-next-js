@@ -13,7 +13,7 @@ export default function KambazLayout({
       >
         <KambazNavigation />
       </aside>
-      <main className="flex-1 min-w-0 p-4 bg-white">{children}</main>
+      <main className="wd-main-content-offset flex-1 min-w-0 p-4 bg-white">{children}</main>
     </div>
   );
 }
