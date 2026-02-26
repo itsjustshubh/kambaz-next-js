@@ -40,11 +40,11 @@ export default function Lab4() {
       <ArrayStateVariable />
       <ParentStateComponent />
       <hr />
-      <Link href="./redux">Redux Examples</Link>
+      <Link href="/labs/lab4/redux">Redux Examples</Link>
       <hr />
-      <Link href="./react-context">React Context Examples</Link>
+      <Link href="/labs/lab4/react-context">React Context Examples</Link>
       <hr />
-      <Link href="./zustand">Zustand Examples</Link>
+      <Link href="/labs/lab4/zustand">Zustand Examples</Link>
     </div>
   );
 }
