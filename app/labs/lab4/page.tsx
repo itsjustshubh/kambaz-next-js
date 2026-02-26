@@ -1,10 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import ClickEvent from "./ClickEvent";
 import PassingDataOnEvent from "./PassingDataOnEvent";
 import PassingFunctions from "./PassingFunctions";
 import EventObject from "./EventObject";
+import EncodingStateInUrl from "./EncodingStateInUrl";
 import Counter from "./Counter";
 import BooleanStateVariables from "./BooleanStateVariables";
 import StringStateVariables from "./StringStateVariables";
@@ -27,6 +29,9 @@ export default function Lab4() {
         <PassingFunctions theFunction={sayHello} />
       </div>
       <EventObject />
+      <Suspense fallback={<div>Loading...</div>}>
+        <EncodingStateInUrl />
+      </Suspense>
       <Counter />
       <BooleanStateVariables />
       <StringStateVariables />
