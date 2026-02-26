@@ -10,7 +10,7 @@ import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 const links = [
   { label: "Dashboard", path: "/dashboard", icon: AiOutlineDashboard },
-  { label: "Courses", path: "#", icon: LiaBookSolid },
+  { label: "Courses", path: "/dashboard", icon: LiaBookSolid },
   { label: "Calendar", path: "/calendar", icon: IoCalendarOutline },
   { label: "Inbox", path: "/inbox", icon: FaInbox },
   { label: "Labs", path: "/labs", icon: LiaCogSolid },
@@ -63,7 +63,7 @@ export default function KambazNavigation() {
               : "text-white bg-black"
           }`}
         >
-          {<link.icon className="fs-1 text-danger" />}
+          {link.icon({ className: "fs-1 text-danger" })}
           <br />
           {link.label}
         </ListGroupItem>
