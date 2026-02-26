@@ -1,10 +1,20 @@
 "use client";
 
+import { useState } from "react";
 import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import { BsGripVertical } from "react-icons/bs";
-import { FaCheckCircle, FaEllipsisV, FaPlus, FaSearch } from "react-icons/fa";
-import * as db from "../../../database";
+import { FaCheckCircle, FaEllipsisV, FaPlus, FaSearch, FaPencilAlt, FaTrash } from "react-icons/fa";
+import { RootState } from "../../../store";
+import {
+  addAssignment,
+  deleteAssignment,
+  updateAssignment,
+} from "./reducer";
+import AssignmentEditorModal, {
+  defaultAssignment,
+} from "./AssignmentEditorModal";
 
 function SectionControls() {
   return (
@@ -16,9 +26,35 @@ function SectionControls() {
   );
 }
 
-function ItemControls() {
+function ItemControls({
+  assignmentId,
+  onEdit,
+  onDelete,
+}: {
+  assignmentId: string;
+  onEdit: () => void;
+  onDelete: () => void;
+}) {
   return (
     <div className="float-end">
+      <FaPencilAlt
+        className="text-primary me-2"
+        style={{ cursor: "pointer" }}
+        onClick={(e) => {
+          e.preventDefault();
+          onEdit();
+        }}
+        role="button"
+      />
+      <FaTrash
+        className="text-danger me-2"
+        style={{ cursor: "pointer" }}
+        onClick={(e) => {
+          e.preventDefault();
+          onDelete();
+        }}
+        role="button"
+      />
       <FaCheckCircle className="text-success me-1" />
       <FaEllipsisV className="ms-1 fs-4" />
     </div>
@@ -27,7 +63,58 @@ function ItemControls() {
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments.filter((a: any) => a.course === cid);
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentsReducer
+  );
+  const dispatch = useDispatch();
+  const courseAssignments = assignments.filter((a: any) => a.course === cid);
+
+  const [showModal, setShowModal] = useState(false);
+  const [editingAssignment, setEditingAssignment] = useState<any>(null);
+  const [assignmentForm, setAssignmentForm] = useState<any>({
+    ...defaultAssignment,
+    course: cid,
+  });
+
+  const handleClose = () => {
+    setShowModal(false);
+    setEditingAssignment(null);
+    setAssignmentForm({ ...defaultAssignment, course: cid });
+  };
+
+  const handleShowAdd = () => {
+    setEditingAssignment(null);
+    setAssignmentForm({ ...defaultAssignment, course: cid });
+    setShowModal(true);
+  };
+
+  const handleEdit = (a: any) => {
+    setEditingAssignment(a);
+    setAssignmentForm({
+      ...a,
+      title: a.title,
+      description: a.description,
+      points: a.points,
+      dueDate: a.dueDate,
+      availableFrom: a.availableFrom,
+      availableUntil: a.availableUntil,
+    });
+    setShowModal(true);
+  };
+
+  const handleSave = () => {
+    if (editingAssignment) {
+      dispatch(
+        updateAssignment({
+          ...editingAssignment,
+          ...assignmentForm,
+        })
+      );
+    } else {
+      dispatch(addAssignment(assignmentForm));
+    }
+    handleClose();
+  };
 
   return (
     <div id="wd-assignments">
@@ -51,6 +138,7 @@ export default function Assignments() {
           type="button"
           className="btn btn-danger btn-lg float-end ms-1"
           id="wd-add-assignment"
+          onClick={handleShowAdd}
         >
           <FaPlus
             className="position-relative me-2"
@@ -77,7 +165,7 @@ export default function Assignments() {
           <SectionControls />
         </div>
         <ul className="list-group wd-lessons rounded-0">
-          {assignments.map((a: any) => (
+          {courseAssignments.map((a: any) => (
             <li
               key={a._id}
               className="list-group-item wd-lesson p-3 ps-1 border-0"
@@ -93,11 +181,24 @@ export default function Assignments() {
                 Multiple Modules | Not available until {a.availableFrom} | Due{" "}
                 {a.dueDate} | {a.points} pts
               </span>
-              <ItemControls />
+              <ItemControls
+                assignmentId={a._id}
+                onEdit={() => handleEdit(a)}
+                onDelete={() => dispatch(deleteAssignment(a._id))}
+              />
             </li>
           ))}
         </ul>
       </div>
+
+      <AssignmentEditorModal
+        show={showModal}
+        handleClose={handleClose}
+        assignment={assignmentForm}
+        setAssignment={setAssignmentForm}
+        onSave={handleSave}
+        isEdit={!!editingAssignment}
+      />
     </div>
   );
 }
